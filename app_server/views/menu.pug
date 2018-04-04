@@ -1,0 +1,8 @@
+extends layout
+
+block content
+    h1= 'Our menu'
+    img(src="images/mr.jpg", alt="Food", style="width:250px;")
+    ul
+        each menu in menus
+            li= menu.food + ' with ' + menu.ingre + ' (' + menu.price + ')'

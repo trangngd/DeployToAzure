@@ -1,0 +1,7 @@
+extends layout
+
+block content
+    h1= 'Contact us'
+    ul
+        each contact in contacts
+            li= contact.note + ': ' + contact.detail
