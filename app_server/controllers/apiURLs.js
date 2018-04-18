@@ -1,9 +1,9 @@
 const apiURL = {
-    server : 'http://localhost:3000/api/menu'
+    server : "http://localhost:3000"
 };
 
 if (process.env.NODE_ENV === 'production') {
-    apiURL.server = 'https://nguyentrang.azurewebsites.net/api/menu';
+    apiURL.server = "https://nguyentrang.azurewebsites.net/";
 }
 
 module.exports = apiURL;
