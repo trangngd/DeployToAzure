@@ -1,14 +1,34 @@
-/* GET home page */
-var menulist = function(req, res){
-    res.render('menu',{
-        menus:
-            [
-                {food:'BRUSCHETTE SICILIANI', ingre:'Oven–baked ciabatta bread served with diced tomatoes', price:'12e'},
-                {food:'GRILLED ASPARAGUS WITH PROSCIUTTO', ingre:'Wood-grilled asparagus wrapped in prosciutto', price:'15e'},
-                {food:'MEATBALLS & RICOTTA', ingre:'Simmered in pomodoro sauce with ricotta and romano cheese', price:'14e'},
-                {food:'THREE-CHEESE & SAUSAGE STUFFED MUSHROOMS', ingre:'Stuffed with sausage, spinach, ricotta, romano, mozzarella', price:'13e'}
-            ]});
+const request = require('request');
+const apiURL = require('./apiURLs');
+
+const menulist = function(req, res){
+    const path = '/api/menu';
+    const requestOptions = {
+        url : 'https://nguyentrang.azurewebsites.net/api/menu',
+        method : 'GET',
+        json : {},
+        qs : {}
+    };
+
+    request(
+        requestOptions,
+        function (err, response, body){
+            if (err){
+                res.render('error', {message: err.message});
+            } else if (response.statusCode !== 200){
+                res.render('error', {message: 'Error accessing API: ' +
+                    response.statusMessage +
+                    " ("+ response.statusCode + ")" });
+            } else if (!(body instanceof Array)) {
+                res.render('error', {message: 'Unexpected response data'});
+            } else if (!body.length){
+                res.render('error', {message: 'No documents in collection'});
+            } else {
+                res.render('menu', {menus: body});
+            }
+        }
+    );
 };
 module.exports = {
-   menulist
+    menulist
 };
