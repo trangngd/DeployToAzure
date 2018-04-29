@@ -1,0 +1,17 @@
+extends layout
+
+block content
+    .row
+        h4 Add to menu
+    form(action="", method="post")
+        .form-group.row
+            label Food
+                input.form-control(name="food")
+        .form-group.row
+            label Ingredients
+                input.form-control(name="ingre")
+        .form-group.row
+             label Price
+                 input.form-control(name="price")
+        .form-group.row
+            button.btn-primary Add 
