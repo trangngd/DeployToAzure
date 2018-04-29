@@ -1,6 +1,39 @@
 const request = require('request');
 const apiURL = require('./apiURLs');
 
+const showForm = function(req, res){
+    res.render('menu_add');
+};
+
+const addData = function(req, res){
+    const path = '/api/menu';
+
+    const postdata = {
+        food: req.body.food,
+        ingre: req.body.ingre,
+        price: req.body.price
+    };
+
+    const requestOptions = {
+        url : apiURL.server + path,
+        method : 'POST',
+        json : postdata
+    };
+
+    request(
+        requestOptions,
+        function (err, response){
+            if (response.statusCode === 201) {
+                res.redirect('/menu');
+            } else {
+                res.render('error', {message: 'Error adding data: ' +
+                    response.statusMessage +
+                    ' ('+ response.statusCode + ')' });
+            }
+        }
+    );
+};
+
 const menulist = function(req, res){
     const path = '/api/menu';
     const requestOptions = {
@@ -30,5 +63,7 @@ const menulist = function(req, res){
     )
 };
 module.exports = {
-    menulist
+    menulist,
+    showForm,
+    addData
 };
